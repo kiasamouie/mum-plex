@@ -1,11 +1,11 @@
 import subprocess
+import sys
 import requests
 from bs4 import BeautifulSoup
 import re
 import os
 
-url = 'https://mbc21.tv/zalem-duble.php'
-
+url = sys.argv[1]
 base_output_dir = os.path.join('/', 'media', 'kiaserver', 'Data', 'Tv Shows')
 series_name = re.sub(r'[-_]', ' ', url.rsplit('/', 1)[-1].split('.')[0]).title() 
 output_dir = os.path.join(base_output_dir, series_name)
