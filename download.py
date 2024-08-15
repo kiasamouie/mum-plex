@@ -6,17 +6,22 @@ import os
 
 url = 'https://mbc21.tv/zalem-duble.php'
 
-output_dir = 'videos'
+base_output_dir = os.path.join('/', 'media', 'kiaserver', 'Data', 'Tv Shows')
+series_name = re.sub(r'[-_]', ' ', url.rsplit('/', 1)[-1].split('.')[0]).title() 
+output_dir = os.path.join(base_output_dir, series_name)
 os.makedirs(output_dir, exist_ok=True)
 
+if not os.path.isdir(output_dir):
+    exit("No save dir")
+
 response = requests.get(url)
-response.raise_for_status() 
+response.raise_for_status()
 
 soup = BeautifulSoup(response.text, 'html.parser')
-videos = {}  
+videos = {}
 rows = soup.select('tr')
 for index, row in enumerate(rows):
-    if index < 1: 
+    if index < 1:
         continue
     urls = []
     cells = row.find_all('td')
